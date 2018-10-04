@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import * as firebase from 'firebase';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  userState:BehaviorSubject<Boolean>;
 user$ :Observable<firebase.User>;
-  constructor(private afAuth:AngularFireAuth,private route:ActivatedRoute) { 
+  constructor(private afAuth:AngularFireAuth,private route:ActivatedRoute,private router:Router) { 
+    this.userState=new BehaviorSubject(false);
     this.user$=this.afAuth.authState;
   }
   login() {
@@ -19,5 +21,9 @@ user$ :Observable<firebase.User>;
   }
   logout(){
     this.afAuth.auth.signOut();
+    this.router.navigate(['/login']);
+    localStorage.clear();
+    this.userState.next(false);
+
   }
 }
