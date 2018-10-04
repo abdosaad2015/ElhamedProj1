@@ -25,6 +25,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AuthService } from './auth.service';
 import { AuthGuardService } from './auth-guard.service';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { AdminAuthGuardService } from './admin-auth-guard.service';
 
 
 @NgModule({
@@ -54,8 +55,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
       { path : 'order-sucess' ,component: OrderSuccessComponent},
       { path : 'me/orders' ,component: OrderSuccessComponent},
       { path : 'login' ,component: LoginComponent},
-      { path : 'admin/products' ,component: AdminProductsComponent,canActivate: [AuthGuardService]},
-      { path : 'admin/orders' ,component: AdminOrdersComponent,canActivate: [AuthGuardService]},
+      { path : 'admin/products' ,component: AdminProductsComponent,canActivate: [AuthGuardService,AdminAuthGuardService]},
+      { path : 'admin/orders' ,component: AdminOrdersComponent,canActivate: [AuthGuardService,AdminAuthGuardService]},
       { path : 'checkout' ,component: CheckoutComponent,canActivate: [AuthGuardService]},
     ]),
     NgbModule,
@@ -68,7 +69,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
     
   providers: [
     AuthService,
-    AuthGuardService
+    AuthGuardService,
+    AdminAuthGuardService
   ],
   bootstrap: [AppComponent]
 })
