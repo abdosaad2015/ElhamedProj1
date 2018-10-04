@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { UserService } from '../user.service';
+import { UserService, user } from '../user.service';
 import * as firebase from 'firebase';
+import { map } from 'rxjs/operators';
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
@@ -13,16 +13,16 @@ import * as firebase from 'firebase';
 export class NavbarComponent implements OnInit {
     isAdmin:boolean;
     user$: Observable<firebase.User>;
-    constructor(private afAuth: AuthService,private route:Router,private userServ:UserService) {
+    user$$: Observable<user>;
+    constructor(public afAuth: AuthService,private route:Router,private userServ:UserService) {
+        this.user$$=this.afAuth.AppUser$.pipe(map(user =>user));
         this.afAuth.userState.subscribe(e =>{
             if(e) {
                 this.user$ = afAuth.user$;
         } else {
             this.user$=null;
         } }  )
-        this.user$ = afAuth.user$;
-        afAuth.user$.subscribe(user =>this.userServ.getUser(user.uid).subscribe(user => this.isAdmin=user.roles.isAdmin));
-        
+        this.user$ = afAuth.user$;        
     }
     ngOnInit() {
     }

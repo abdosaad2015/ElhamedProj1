@@ -26,6 +26,9 @@ import { AuthService } from './auth.service';
 import { AuthGuardService } from './auth-guard.service';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AdminAuthGuardService } from './admin-auth-guard.service';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
+import { CategoryService } from './category.service';
+import { ProductService } from './product.service';
 
 
 @NgModule({
@@ -40,7 +43,8 @@ import { AdminAuthGuardService } from './admin-auth-guard.service';
     AdminProductsComponent,
     AdminOrdersComponent,
     LoginComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +60,8 @@ import { AdminAuthGuardService } from './admin-auth-guard.service';
       { path : 'me/orders' ,component: OrderSuccessComponent},
       { path : 'login' ,component: LoginComponent},
       { path : 'admin/products' ,component: AdminProductsComponent,canActivate: [AuthGuardService,AdminAuthGuardService]},
+      { path : 'admin/products/new' ,component: ProductFormComponent,canActivate: [AuthGuardService,AdminAuthGuardService]},
+
       { path : 'admin/orders' ,component: AdminOrdersComponent,canActivate: [AuthGuardService,AdminAuthGuardService]},
       { path : 'checkout' ,component: CheckoutComponent,canActivate: [AuthGuardService]},
     ]),
@@ -70,7 +76,9 @@ import { AdminAuthGuardService } from './admin-auth-guard.service';
   providers: [
     AuthService,
     AuthGuardService,
-    AdminAuthGuardService
+    AdminAuthGuardService,
+    CategoryService,
+    ProductService
   ],
   bootstrap: [AppComponent]
 })

@@ -7,13 +7,11 @@ import { UserService } from './user.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminAuthGuardService implements CanActivate{
-  user:firebase.User;
-  constructor(private auth:AuthService,private userSer:UserService) { 
+export class AdminAuthGuardService implements CanActivate {
+  user: firebase.User;
+  constructor(private auth: AuthService, private userSer: UserService) {
   }
   canActivate() {
- return this.auth.user$.pipe(switchMap(user => 
- this.userSer.getUser(user.uid).pipe(map(e => e.roles.isAdmin))
- ))
+    return this.auth.AppUser$.pipe(map(e => e.roles.isAdmin));
   }
 }
