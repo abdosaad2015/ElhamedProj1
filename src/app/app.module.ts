@@ -29,6 +29,11 @@ import { AdminAuthGuardService } from './admin-auth-guard.service';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { CategoryService } from './category.service';
 import { ProductService } from './product.service';
+import { CustomFormsModule } from 'ng2-validation'
+import { ReactiveFormsModule } from '@angular/forms';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+import { HttpClient, HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 
 @NgModule({
@@ -52,6 +57,10 @@ import { ProductService } from './product.service';
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
+    CustomFormsModule,
+    ReactiveFormsModule,
+    DialogModule,HttpClient, HttpClientModule, HttpClientJsonpModule,
+    GridModule,
     RouterModule.forRoot([
       { path : '' ,component: HomeComponent},
       { path : 'products' , component: ProductsComponent},
