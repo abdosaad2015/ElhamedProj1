@@ -1,21 +1,36 @@
-<form #f="ngForm" (ngSubmit)="save(f.value)">
-  <div class="form-group mb-3">
-    <input ngModel name="title" type="text" class="form-control" id="title"  placeholder="Title">
-  </div>
-    <div class="input-group mb-3">
+<div class="row">
+  <div class="col-md-6">
+    <form #f="ngForm" (ngSubmit)="save(f.value)">
+      <div class="form-group mb-3">
+        <input #title ngModel name="title" type="text" class="form-control" id="title" placeholder="Title" required>
+        <div class="alert alert-danger" *ngIf="title.errors.required">The title is required</div>
+      </div>
+      <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">@</span>
         </div>
-        <input ngModel name="price" type="number" class="form-control"  placeholder="Price" aria-label="Price" aria-describedby="basic-addon1">
+        <input #price ngModel name="price" type="number" class="form-control" placeholder="Price" aria-label="Price"
+          aria-describedby="basic-addon1">
       </div>
-    <div class="form-group mb-3">
+      <div class="form-group mb-3">
         <label for="category">Category</label>
-        <select ngModel name="category" id="category" class="form-control" >
-          <option *ngFor="let c of cats$ | async" value="c.id">{{c.name}}</option>
+        <select #category ngModel name="category" id="category" class="form-control">
+          <option *ngFor="let c of cats$ | async" [value]="c.id">{{c.name}}</option>
         </select>
       </div>
-        <div class="form-group mb-3">
-            <input ngModel name="imageUrl" type="url" class="form-control"  placeholder="ImageUrl" id="imageUrl">
-          </div>
-      <button href="" class="btn btn-primary">Save</button>        
-</form>
+      <div class="form-group mb-3">
+        <input #imageUrl ngModel name="imageUrl" type="url" class="form-control" placeholder="ImageUrl" id="imageUrl">
+      </div>
+      <button href="" class="btn btn-primary">Save</button>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <div *ngIf="title.value" class="card" style="width: 18rem;">
+      <img *ngIf="imageUrl.value" class="card-img-top" [src]="imageUrl.value" alt="Card image cap">
+      <div class="card-body">
+        <h5 *ngIf="title.value" class="card-title">{{title.value}}</h5>
+        <p class="card-text">{{price.value | currency:'EGP':true }}</p>
+      </div>
+    </div>
+  </div>
+</div>
